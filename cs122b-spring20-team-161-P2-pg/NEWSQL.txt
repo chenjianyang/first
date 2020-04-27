@@ -1,0 +1,52 @@
+
+************   Movie List Page     ****************************
+CREATE view topMovies AS (select movies.id, movies.title, movies.year, movies.director, substring_index(group_concat(distinct genres.name SEPARATOR ','), ',', 3) as genres, ratings.rating 
+from ratings, movies , genres, genres_in_movies
+where (movies.id = ratings.movieId) AND (ratings.movieId = genres_in_movies.movieId) AND (genres_in_movies.genreId = genres.id) 
+group by ratings.rating , movies.title
+order by rating desc limit 20);
+
+
+ALTER TABLE stars_in_movies ADD INDEX(starId);
+ALTER TABLE stars_in_movies ADD INDEX(movieId);
+ALTER TABLE genres_in_movies ADD INDEX(movieId);
+ALTER TABLE genres_in_movies ADD INDEX(genreId);
+
+
+
+select topMovies.title, topMovies.year ,topMovies.director,topMovies.genres, substring_index(group_concat(distinct stars.name SEPARATOR ','), ',', 3) as stars,topMovies.rating
+from topMovies,stars,stars_in_movies
+where (topMovies.id = stars_in_movies.movieId) AND (stars_in_movies.starId = stars.id) 
+group by topMovies.year , topMovies.title
+order by rating desc;
+
+
+
+************   Single Movie Page     ****************************
+
+
+CREATE view topMovies AS (select movies.id, movies.title, movies.year, movies.director, substring_index(group_concat(distinct genres.name SEPARATOR ','), ',', 3) as genres, ratings.rating 
+from ratings, movies , genres, genres_in_movies
+where (movies.id = ratings.movieId) AND (ratings.movieId = genres_in_movies.movieId) AND (genres_in_movies.genreId = genres.id) 
+group by ratings.rating , movies.title
+order by rating desc limit 20);
+
+
+ALTER TABLE stars_in_movies ADD INDEX(starId);
+ALTER TABLE stars_in_movies ADD INDEX(movieId);
+ALTER TABLE genres_in_movies ADD INDEX(movieId);
+ALTER TABLE genres_in_movies ADD INDEX(genreId);
+select topMovies.title, topMovies.year ,topMovies.director,topMovies.genres, group_concat(distinct stars.name SEPARATOR ',') as stars, topMovies.rating,topMovies.id
+from topMovies,stars,stars_in_movies
+where (topMovies.id = stars_in_movies.movieId) AND (stars_in_movies.starId = stars.id) and topMovies.id="tt0395642"
+group by topMovies.rating , topMovies.title
+order by rating desc;
+
+
+************   Single STAR Page     ****************************
+
+
+select s.name,ifnull(s.birthYear,'N/A')as birthyear,group_concat(distinct m.title separator ', ') as moviename,s.id
+from stars as s, stars_in_movies as sm, movies as m
+where s.id=sm.starId and sm.movieId=m.id and s.id='nm0817431'
+group by s.name,s.id
