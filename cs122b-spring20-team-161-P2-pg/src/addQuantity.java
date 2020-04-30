@@ -20,7 +20,7 @@ import java.util.Iterator;
 public class addQuantity extends HttpServlet {
 
     public void  doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("99988");
+        System.out.println("aaa");
         PrintWriter out = response.getWriter();
         String id = request.getParameter("id");
         System.out.println(id);

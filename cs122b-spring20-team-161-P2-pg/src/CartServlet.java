@@ -101,7 +101,7 @@ public class CartServlet extends HttpServlet {
             //temp.addProperty("movie_genres", theOneinCart.get("movie_genres").toString().replaceAll("\"",""));
             temp.addProperty("movie_rating", theOneinCart.get("movie_rating").toString().replaceAll("\"",""));
 
-            number1=Integer.valueOf(theOneinCart.get("price").toString().replaceAll("\"",""));
+            number1=Integer.valueOf(theOneinCart.get("price").toString());
             temp.addProperty("price",number1);
             number2=Integer.valueOf(theOneinCart.get("quantity").toString());
             temp.addProperty("quantity",number2+1);
